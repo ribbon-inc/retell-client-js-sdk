@@ -40,7 +40,9 @@ export class RetellWebClient extends EventEmitter {
   public async startConversation(
     startConversationConfig: StartConversationConfig
   ): Promise<void> {
+    console.log("hello Anne");
     try {
+      console.log("hello Anne 2");
       await this.setupAudioPlayback(
         startConversationConfig.sampleRate,
         startConversationConfig.customStream,
@@ -144,8 +146,10 @@ export class RetellWebClient extends EventEmitter {
     customStream?: MediaStream,
     customSinkId?: string
   ): Promise<void> {
+    console.log("hello Anne3");
     this.audioContext = new AudioContext({ sampleRate: sampleRate });
     if (customSinkId) {
+      console.log("hello Anne4");
       (
         this.audioContext as AudioContext & {
           setSinkId: (sinkId: string) => void;
@@ -153,6 +157,7 @@ export class RetellWebClient extends EventEmitter {
       ).setSinkId(customSinkId);
       console.log("Hello Anne, setting sinkId");
     }
+    console.log("hello Anne5");
     try {
       this.stream =
         customStream ||
