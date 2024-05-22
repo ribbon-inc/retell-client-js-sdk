@@ -145,14 +145,6 @@ export class RetellWebClient extends EventEmitter {
     customSinkId?: string
   ): Promise<void> {
     this.audioContext = new AudioContext({ sampleRate: sampleRate });
-    if (customSinkId) {
-      (
-        this.audioContext as AudioContext & {
-          setSinkId: (sinkId: string) => void;
-        }
-      ).setSinkId(customSinkId);
-      console.log("Hello Anne, setting sinkId");
-    }
     try {
       this.stream =
         customStream ||
@@ -169,6 +161,9 @@ export class RetellWebClient extends EventEmitter {
     }
 
     if (this.isAudioWorkletSupported()) {
+      if (customSinkId) {
+        (this.audioContext as any).setSinkId(customSinkId);
+      }
       console.log("Audio worklet starting");
       this.audioContext.resume();
       const blob = new Blob([workletCode], { type: "application/javascript" });
